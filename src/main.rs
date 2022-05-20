@@ -26,25 +26,25 @@ fn main()
 	let solution = backtrack(&root, node_list);
 
 	match solution {
-		Some(x) => print_solution(&x.candidate),
-		None => println!("Unable to solve puzzle!"),
+		Ok(x) => print_solution(&x.candidate),
+		Err(x) => println!("Unable to solve puzzle!"),
 	}
 }
 
 // Recursively solve the puzzle
-fn backtrack(parent : &Node, node_list: Vec<Node>) -> Option<Node>
+fn backtrack(parent : &Node, node_list: Vec<Node>) -> Result<Node, ()>
 {
 	let mut to_change: usize = 0;
 
 	// Base cases
 	if reject(&parent.candidate) {
-		return None;
+		return Err(());
 	} else if accept(&parent.candidate) {
-		return Some(parent.clone());
+		return Ok(parent.clone());
 	}
 
 
-	None
+	Err(())
 }
 
 // Generate first child of parent
@@ -54,9 +54,9 @@ fn first(parent: &mut Node, node_list: Vec<Node>, to_change: &mut usize) -> Node
 }
 
 // Generate next child after prev
-fn next(parent: &mut Node, prev: &Node, node_list: Vec<Node>, to_change: &usize) -> Option<Node>
+fn next(parent: &mut Node, prev: &Node, node_list: Vec<Node>, to_change: &usize) -> Result<Node, ()>
 {
-
+	
 }
 
 // Check if everysquare is full
