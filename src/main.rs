@@ -18,23 +18,23 @@ fn main()
 		return;
 	}
 
-	let mut node_list: Vec<Box<Node>> = Vec::new(); 
+	let mut node_list: Vec<Node> = Vec::new(); 
 	let mut puzzle: [u32; 81] = [0; 81];
 	parse(&mut puzzle, &argv[1]);
 
-	let root = Box::new(Node { index: 0, candidate: puzzle, children: [0; 9] });
+	let root = Node { index: 0, candidate: puzzle, children: [0; 9] };
 	node_list.push(root);
 
 	let solution = backtrack(0, &mut node_list);
 
 	match solution {
 		Ok(x) => print_solution(&node_list[x].candidate),
-		Err(x) => println!("Unable to solve puzzle!"),
+		Err(_) => println!("Unable to solve puzzle!"),
 	}
 }
 
 // Recursively solve the puzzle
-fn backtrack(parent_ind: usize, node_list: &mut Vec<Box<Node>>) -> Result<usize, ()>
+fn backtrack(parent_ind: usize, node_list: &mut Vec<Node>) -> Result<usize, ()>
 {
 	let mut to_change: usize = 0;
 
@@ -46,12 +46,17 @@ fn backtrack(parent_ind: usize, node_list: &mut Vec<Box<Node>>) -> Result<usize,
 	}
 
 	// recursively solve the puzzle
-	let mut p: usize;
+	let mut p: Result<usize, ()>;
 	let mut s: usize = first(parent_ind, node_list, &mut to_change);
 	
-	for i in 0..9
+	for _ in 0..8 // create next 8 children
 	{
-		
+		p = backtrack(s, node_list);
+		if p.is_ok() {
+			return p;
+		}
+		p = Ok(s);
+		s = next(parent_ind, p.unwrap(), node_list, &to_change);
 	}
 
 
@@ -59,7 +64,7 @@ fn backtrack(parent_ind: usize, node_list: &mut Vec<Box<Node>>) -> Result<usize,
 }
 
 // Generate first child of parent
-fn first(parent_ind: usize, node_list: &mut Vec<Box<Node>>, to_change: &mut usize) -> usize
+fn first(parent_ind: usize, node_list: &mut Vec<Node>, to_change: &mut usize) -> usize
 {
 	let empty_arr: [usize; 9] = [0; 9];
 	let mut empty_puzzle: [u32; 81] = [0; 81];
@@ -75,7 +80,7 @@ fn first(parent_ind: usize, node_list: &mut Vec<Box<Node>>, to_change: &mut usiz
 			empty_puzzle[i] = 1;
 		}
 	}
-	let child = Box::new(Node { index: 0, candidate: empty_puzzle, children: empty_arr });
+	let child = Node { index: 0, candidate: empty_puzzle, children: empty_arr };
 	
 	node_list[parent_ind].children[0] = node_list.len();
 	node_list[parent_ind].index = 1;
@@ -85,18 +90,16 @@ fn first(parent_ind: usize, node_list: &mut Vec<Box<Node>>, to_change: &mut usiz
 }
 
 // Generate next child after prev
-fn next(parent_ind: usize, prev: &Node, node_list: &mut Vec<Box<Node>>, to_change: &usize) -> usize
+fn next(parent_ind: usize, prev: usize, node_list: &mut Vec<Node>, to_change: &usize) -> usize
 {
 	let empty_arr: [usize; 9] = [0; 9];
 	let mut empty_puzzle: [u32; 81] = [0; 81];
 	
-	for i in 0..81
-	{
-		empty_puzzle[i] = node_list[parent_ind].candidate[i];
-	}
-	empty_puzzle[*to_change] = prev.candidate[*to_change] + 1;
+	empty_puzzle[..81].copy_from_slice(&node_list[parent_ind].candidate[..81]);
+
+	empty_puzzle[*to_change] = node_list[prev].candidate[*to_change] + 1;
 	
-	let child = Box::new(Node { index: 0, candidate: empty_puzzle, children: empty_arr });
+	let child = Node { index: 0, candidate: empty_puzzle, children: empty_arr };
 
 	let length: usize = node_list.len();
 	let parent: &mut Node = &mut node_list[parent_ind];
@@ -104,15 +107,15 @@ fn next(parent_ind: usize, prev: &Node, node_list: &mut Vec<Box<Node>>, to_chang
 	parent.index += 1;
 	node_list.push(child);
 	
-	length
+	length // this works out to be the index of child
 }
 
 // Check if everysquare is full
 fn accept(puzzle: &[u32; 81]) -> bool
 {
-	for i in 0..81
+	for i in puzzle
 	{
-		if puzzle[i] == 0 {
+		if *i == 0 {
 			return false;
 		}
 	}
