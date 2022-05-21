@@ -39,3 +39,22 @@ Example file:
 Converted into (as image)
 
 ![sudoku_example_cropped](https://user-images.githubusercontent.com/100320298/169367764-f1fe46eb-6326-4101-97dc-d9b1d3471e8b.png)
+
+**Changes**
+
+Besides this project being rewritten in a new language, the biggest difference is how I implemented the tree. Because Rust 
+requires extra safety, and doesn't really approve of the self-referential structures I employed in C, I had to make some
+changes. Instead of storing Nodes freely on the heap, they are stored in a Vec. Every new Node is pushed onto the Vec. 
+So, within each Node structure instead of holding pointers to its children, it stores indices to its children in the Vec.
+Many other things were kept to work in a similar, if not the same, way as my C implementation.
+
+**Rust**
+
+Working with Rust for a first project was actually a LOT of fun. Coming from building a few projects in C/C++ it was pretty
+shocking how nice the compiler was. It gives you advice on EVERYTHING. I also had fun with how easy cargo was to use 
+compared to creating your own Makefiles by hand. I also got to play with rustfmt as well. All of these tools made it lots
+of fun starting using Rust. The most important part too, I didn't have to worry about any memory leaks, dangling or wild pointers.
+All of the heap allocations were taken care of. I have to say, again, that it was a LOT of fun using Rust.
+
+![Ferris the Crab](https://rustacean.net/assets/rustacean-orig-noshadow.png)
+
