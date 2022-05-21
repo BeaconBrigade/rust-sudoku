@@ -21,27 +21,11 @@ delayed between each print.
 
 Example file:
 
-1  6 _  _  _  _  _  _  _
-
-2  _  _  0  _  _  _  _  _
-
-3  _  _  _  _  _  _  8  _
-
-4  _  _  _  _  _  _  _  _
-
-5  _  _  0  _  _  _  _  _
-
-6  _  _  _  _  _  _  _  _
-
-7  _  2  _  _  b  _  _  _
-
-8  _  _  _  _  _  _  _  _
-
-9  _  _  _  q  _  8  _  _
+![sudoku puzzle in txt format](https://user-images.githubusercontent.com/100320298/169670900-7a61b8ca-f7b6-4db2-bb67-336299de8ecb.png)
 
 Converted into (as image)
 
-![sudoku_example_cropped](https://user-images.githubusercontent.com/100320298/169367764-f1fe46eb-6326-4101-97dc-d9b1d3471e8b.png)
+![sudoku puzzle converted](https://user-images.githubusercontent.com/100320298/169367764-f1fe46eb-6326-4101-97dc-d9b1d3471e8b.png)
 
 **Changes**
 
