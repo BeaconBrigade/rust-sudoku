@@ -1,0 +1,9 @@
+a a a a 2 8 a a a
+a 5 4 a a 1 a a 9
+a 8 a 3 a a a a 7
+3 6 a a a 9 a 1 4
+1 a a a a a a a 2
+a a 8 a 5 a a 9 a
+a 3 a a a a a a 1
+a a a a a a a 4 a
+a 4 a a 8 a a 7 3
