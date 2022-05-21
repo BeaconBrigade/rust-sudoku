@@ -9,10 +9,10 @@ I'll only be using the standard rust library.
 The program can be invoked from the command line:
 `cargo run -- <FILEPATH/TO/SUDOKUPUZZLE.txt> [-p<delay]`
 
-The aforementioned .txt file will should use the following guidelines:
+The aforementioned .txt file will be read as follows:
 
-1. Numbers that are known will just be numbers (1-9)
-2. Letters and the number 0 will be interpretted as blank squares
+1. The numbers 1-9 will be interpreted as the hints.
+2. Letters and the number 0 will be interpreted as blank squares
 3. Whitespace will be ignored
 4. The program will only read the first 81 non-whitespace characters
 
