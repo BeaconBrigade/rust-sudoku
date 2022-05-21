@@ -7,7 +7,7 @@ I'll only be using the standard rust library.
 **Using**
 
 The program can be invoked from the command line:
-`cargo run -- <FILEPATH/TO/SUDOKUPUZZLE.txt>`
+`cargo run -- <FILEPATH/TO/SUDOKUPUZZLE.txt> [-p<delay]`
 
 The aforementioned .txt file will should use the following guidelines:
 
@@ -15,6 +15,9 @@ The aforementioned .txt file will should use the following guidelines:
 2. Letters and the number 0 will be interpretted as blank squares
 3. Whitespace will be ignored
 4. The program will only read the first 81 non-whitespace characters
+
+The `-p<delay` option will tell the program to print all partial solutions. The `<delay>` is how many milliseconds are
+delayed between each print.
 
 Example file:
 

@@ -10,9 +10,25 @@ struct Node {
 fn main() {
 	// Command line arguments
 	let argv: Vec<String> = env::args().collect();
-	if argv.len() != 2 {
-		println!("Using {} <FIlENAME>", argv[0]);
+	if argv.len() != 2 && argv.len() != 3 {
+		print_err();
 		return;
+	}
+
+	// Check if print partials should be run
+	let mut print_partials: Option<u64> = None;
+	if argv.len() == 3 {
+		if argv[2][..2] == *"-p" {
+			let delay: Result<u64, _> = argv[2][2..].parse::<u64>();
+			if delay.is_err() {
+				print_err();
+				return;
+			}
+			print_partials = delay.ok();
+		} else {
+			print_err();
+			return;
+		}
 	}
 
 	let mut node_list: Vec<Node> = Vec::new();
@@ -26,7 +42,7 @@ fn main() {
 	};
 	node_list.push(root);
 
-	let solution = backtrack(0, &mut node_list);
+	let solution = backtrack(0, &mut node_list, print_partials);
 
 	match solution {
 		Ok(x) => print_solution(&node_list[x].candidate),
@@ -35,8 +51,18 @@ fn main() {
 }
 
 // Recursively solve the puzzle
-fn backtrack(parent_ind: usize, node_list: &mut Vec<Node>) -> Result<usize, ()> {
+fn backtrack(
+	parent_ind: usize,
+	node_list: &mut Vec<Node>,
+	delay: Option<u64>,
+) -> Result<usize, ()> {
 	let mut to_change: usize = 0;
+
+	// Print the partial solutions and add delay
+	if let Some(del) = delay {
+		std::thread::sleep(std::time::Duration::from_millis(del));
+		print_solution(&node_list[parent_ind].candidate);
+	}
 
 	// Base cases
 	if reject(&node_list[parent_ind].candidate) {
@@ -51,7 +77,7 @@ fn backtrack(parent_ind: usize, node_list: &mut Vec<Node>) -> Result<usize, ()> 
 
 	// create next 8 children
 	while s.is_ok() {
-		p = backtrack(s.unwrap(), node_list);
+		p = backtrack(s.unwrap(), node_list, delay);
 		if p.is_ok() {
 			return p;
 		}
@@ -218,6 +244,12 @@ fn print_solution(puzzle: &[u32; 81]) {
 		}
 	}
 	println!("+-------+-------+-------+");
+}
+
+fn print_err() {
+	println!("Using rust_sudoku <FIlENAME> [options]");
+	println!("\nOptions:");
+	println!("	-p<delay>	Print the partial solutions (will add <delay> ms to make output readable");
 }
 
 // Read input from file
