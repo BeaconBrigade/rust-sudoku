@@ -153,7 +153,7 @@ fn next(
 
 // Check if everysquare is full
 fn accept(puzzle: &[u32; 81]) -> bool {
-    for i in puzzle {
+    for i in puzzle.iter() {
         if *i == 0 {
             return false;
         }
@@ -164,7 +164,7 @@ fn accept(puzzle: &[u32; 81]) -> bool {
 
 // Check if candidate is still valid
 fn reject(puzzle: &[u32; 81]) -> bool {
-    let mut counter: [u32; 10] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // first element is for blanks
+    let mut counter = [0u32; 10]; // first element is for blanks
 
     // Check horizontal rows
     for i in 0..9 {
