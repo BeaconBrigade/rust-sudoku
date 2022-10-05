@@ -233,7 +233,8 @@ impl Node {
     fn print_solution(&self, config: &Config) -> anyhow::Result<()> {
         let puzzle = &self.candidate;
         let mut output = match &config.output {
-            Some(path) => Box::new(File::create(path).context("Could not open output file.")?) as Box<dyn Write>,
+            Some(path) => Box::new(File::create(path).context("Could not open output file.")?)
+                as Box<dyn Write>,
             None => Box::new(io::stdout()) as Box<dyn Write>,
         };
         match config.style {
