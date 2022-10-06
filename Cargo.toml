@@ -1,7 +1,13 @@
 [package]
 name = "rust-sudoku"
-version = "0.1.0"
-edition = "2018"
+version = "0.2.0"
+edition = "2021"
+description = "Command line sudoku solver."
+keywords = ["sudoku", "cli"]
+license = "MIT"
+documentation = "https://docs.rs/rust-sudoku"
+homepage = "https://github.com/BeaconBrigade/rust-sudoku"
+repository = "https://github.com/BeaconBrigade/rust-sudoku.git"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
