@@ -1,5 +1,5 @@
-use bpaf::{Bpaf, FromOsStr};
-use std::path::PathBuf;
+use bpaf::{Bpaf, FromUtf8};
+use std::{path::PathBuf, str::FromStr};
 
 #[derive(Debug, Clone, Bpaf)]
 /// Solve Sudoku problems *blazingly fast*.
@@ -9,17 +9,17 @@ use std::path::PathBuf;
 /// Any whitespace is ignored.
 #[bpaf(options, version)]
 pub struct Config {
-    /// Location of puzzle to read.
+    /// Location of puzzle to read or stdin by default.
     #[bpaf(short, long, argument("FILE"))]
     pub input: Option<PathBuf>,
-    /// Output file to write solution to. Leave blank to write to stdout.
+    /// Output file to write solution to or stdout by default.
     #[bpaf(short, long, argument("FILE"))]
     pub output: Option<PathBuf>,
     /// Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`
-    #[bpaf(long, argument("STYLE"), fallback(OutputStyle::Bordered))]
+    #[bpaf(long, argument::<FromUtf8<OutputStyle>>("STYLE"), fallback(OutputStyle::Bordered))]
     pub style: OutputStyle,
     /// Print each partial solution to the console as the program runs.
-    #[bpaf(short, long, fallback(false))]
+    #[bpaf(short, long)]
     pub print_partials: bool,
     /// Add delay between each iteration in ms (useful when using `--print-partials`).
     #[bpaf(short, long, argument("DELAY"))]
@@ -37,18 +37,15 @@ pub enum OutputStyle {
     Bordered,
 }
 
-impl FromOsStr for OutputStyle {
-    type Out = Self;
+impl FromStr for OutputStyle {
+    type Err = &'static str;
 
-    fn from_os_str(s: std::ffi::OsString) -> Result<Self::Out, String>
-    where
-        Self: Sized,
-    {
-        match s.to_str().ok_or_else(|| "Invalid utf8".to_string())? {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
             "simple" => Ok(Self::Simple),
             "multiline" => Ok(Self::MultiLine),
             "bordered" => Ok(Self::Bordered),
-            _ => Err("Invalid output style, expected simple|multiline|bordered".to_string()),
+            _ => Err("Invalid output style, expected simple|multiline|bordered"),
         }
     }
 }
