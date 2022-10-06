@@ -54,7 +54,7 @@ impl SudokuSolver {
     }
 
     /// Get the solution the solver generates.
-    pub fn solution(&self) -> &Option<Node> {
+    pub fn solution(&self) -> &Option<Box<Node>> {
         &self.solution
     }
 
