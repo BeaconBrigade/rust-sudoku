@@ -9,10 +9,10 @@ use std::{path::PathBuf, str::FromStr};
 /// Any whitespace is ignored.
 #[bpaf(options, version)]
 pub struct Config {
-    /// Location of puzzle to read or stdin by default
+    /// Location of puzzle to read or stdin by default.
     #[bpaf(short, long, argument("FILE"))]
     pub input: Option<PathBuf>,
-    /// Output file to write solution to or stdout by default
+    /// Output file to write solution to or stdout by default.
     #[bpaf(short, long, argument("FILE"))]
     pub output: Option<PathBuf>,
     /// Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`
