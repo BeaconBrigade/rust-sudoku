@@ -53,6 +53,11 @@ impl SudokuSolver {
         Ok(())
     }
 
+    /// Get the solution the solver generates.
+    pub fn solution(&self) -> &Option<Node> {
+        &self.solution
+    }
+
     fn output(&mut self) -> anyhow::Result<()> {
         let solution = self
             .solution

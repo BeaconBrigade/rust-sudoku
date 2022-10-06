@@ -15,7 +15,7 @@ pub struct Config {
     /// Output file to write solution to or stdout by default.
     #[bpaf(short, long, argument("FILE"))]
     pub output: Option<PathBuf>,
-    /// Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`
+    /// Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`.
     #[bpaf(long, argument::<FromUtf8<OutputStyle>>("STYLE"), fallback(OutputStyle::Bordered))]
     pub style: OutputStyle,
     /// Print each partial solution to the console as the program runs.
