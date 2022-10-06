@@ -1,8 +1,7 @@
 # Rust Sudoku Solver
 The sudoku solver I made in C, but remade in rust to get some practice using the language.
 
-I'm trying to implement the same backtracking algorithm that I used before to solve the puzzle.
-I'll only be using the standard rust library.
+This version is more robust with a better CLI argument parser and more features. 
 
 ## v0.2 Update:
 
@@ -12,7 +11,7 @@ and output file. They fallback to stdin/stdout respectively (allowing data to be
 into the program. I also added multiple printing types including `simple`, `multiline` and `bordered` 
 (previous method). `simple` is everything printed onto the same line, `multiline` is everything still
 printed in a grid but without the borders around each square and `bordered` which prints borders around
-the puzzle and every 3 x 3 area. Anyways, back to the original post which seems more like a blog now.
+the puzzle and every 3 x 3 area.
 
 ## Installation
 
@@ -62,6 +61,7 @@ Converted into (as image)
 
 ![Rust_Sudoku_Solver](https://user-images.githubusercontent.com/100320298/171497375-5417d01c-4cb7-4a7e-a344-17aa9aaccf21.gif)
 
+***Original post (kind of a blog):***
 
 ## Changes
 
