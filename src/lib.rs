@@ -54,8 +54,9 @@ impl SudokuSolver {
     }
 
     /// Get the solution the solver generates.
-    pub fn solution(&self) -> &Option<Box<Node>> {
-        &self.solution
+    pub fn solution(&self) -> Option<[u8; 81]> {
+        let candidate = self.solution.as_ref()?.candidate;
+        Some(candidate)
     }
 
     fn output(&mut self) -> anyhow::Result<()> {
