@@ -1,5 +1,5 @@
-use bpaf::{Bpaf, FromOsStr};
-use std::path::PathBuf;
+use bpaf::{Bpaf, FromUtf8};
+use std::{path::PathBuf, str::FromStr};
 
 #[derive(Debug, Clone, Bpaf)]
 /// Solve Sudoku problems *blazingly fast*.
@@ -16,7 +16,7 @@ pub struct Config {
     #[bpaf(short, long, argument("FILE"))]
     pub output: Option<PathBuf>,
     /// Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`
-    #[bpaf(long, argument("STYLE"), fallback(OutputStyle::Bordered))]
+    #[bpaf(long, argument::<FromUtf8<OutputStyle>>("STYLE"), fallback(OutputStyle::Bordered))]
     pub style: OutputStyle,
     /// Print each partial solution to the console as the program runs.
     #[bpaf(short, long, fallback(false))]
@@ -37,18 +37,15 @@ pub enum OutputStyle {
     Bordered,
 }
 
-impl FromOsStr for OutputStyle {
-    type Out = Self;
+impl FromStr for OutputStyle {
+    type Err = &'static str;
 
-    fn from_os_str(s: std::ffi::OsString) -> Result<Self::Out, String>
-    where
-        Self: Sized,
-    {
-        match s.to_str().ok_or_else(|| "Invalid utf8".to_string())? {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
             "simple" => Ok(Self::Simple),
             "multiline" => Ok(Self::MultiLine),
             "bordered" => Ok(Self::Bordered),
-            _ => Err("Invalid output style, expected simple|multiline|bordered".to_string()),
+            _ => Err("Invalid output style, expected simple|multiline|bordered"),
         }
     }
 }
