@@ -19,7 +19,7 @@ pub struct Config {
     #[bpaf(long, argument::<FromUtf8<OutputStyle>>("STYLE"), fallback(OutputStyle::Bordered))]
     pub style: OutputStyle,
     /// Print each partial solution to the console as the program runs.
-    #[bpaf(short, long, fallback(false))]
+    #[bpaf(short, long)]
     pub print_partials: bool,
     /// Add delay between each iteration in ms (useful when using `--print-partials`).
     #[bpaf(short, long, argument("DELAY"))]
