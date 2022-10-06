@@ -360,7 +360,7 @@ mod tests {
             4, 3, 6, 5, 8, 9, 7, 3, 6, 5, 8, 9, 7, 2, 1, 4, 8, 9, 7, 2, 1, 4, 3, 6, 5, 5, 3, 1, 6,
             4, 2, 9, 7, 8, 6, 4, 2, 9, 7, 8, 5, 3, 1, 9, 7, 8, 5, 3, 1, 6, 4, 2,
         ];
-        assert_eq!(solution.solution.unwrap().candidate, confirmed_solution);
+        assert_eq!(solution.solution().unwrap(), confirmed_solution);
     }
 
     #[test]
