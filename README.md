@@ -4,20 +4,49 @@ The sudoku solver I made in C, but remade in rust to get some practice using the
 I'm trying to implement the same backtracking algorithm that I used before to solve the puzzle.
 I'll only be using the standard rust library.
 
+## v0.2 Update:
+
+After a few months learning more about rust, I've updated the program to be a bit more idiomatic and 
+robust. I've added `bpaf` and `anyhow` to make a better cli. I've also added features to add an input
+and output file. They fallback to stdin/stdout respectively (allowing data to be piped in or redirected
+into the program. I also added multiple printing types including `simple`, `multiline` and `bordered` 
+(previous method). `simple` is everything printed onto the same line, `multiline` is everything still
+printed in a grid but without the borders around each square and `bordered` which prints borders around
+the puzzle and every 3 x 3 area. Anyways, back to the original post which seems more like a blog now.
+
+## Installation
+
+- cargo
+```shell
+$ cargo install rust-sudoku
+```
+- Prebuilt binaries
+
+Get a prebuilt binary from the releases.
+
 ## Usage
 
-The program can be invoked from the command line:
-`cargo run -- <FILEPATH/TO/SUDOKUPUZZLE.txt> [-p<delay]`
+```shell
+$ rust-sudoku --help
+```
 
-The aforementioned .txt file will be read as follows:
+```text
+Solve Sudoku problems *blazingly fast*.
+Accepts input from a text file to fill in the puzzle. Each number (1-9) is interpreted
+as that number in the puzzle. A zero or any other letter is considered a blank space.
+Any whitespace is ignored.
 
-1. The numbers 1-9 will be interpreted as the hints.
-2. Letters and the number 0 will be interpreted as blank squares
-3. Whitespace will be ignored
-4. The program will only read the first 81 non-whitespace characters
+Usage: [-i FILE] [-o FILE] [--style STYLE] [[-p]] [-d DELAY]
 
-The `-p<delay` option will tell the program to print all partial solutions. The `<delay>` is how many milliseconds are
-delayed between each print.
+Available options:
+    -i, --input <FILE>    Location of puzzle to read.
+    -o, --output <FILE>   Output file to write solution to. Leave blank to write to stdout.
+        --style <STYLE>   Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`
+    -p, --print-partials  Print each partial solution to the console as the program runs.
+    -d, --delay <DELAY>   Add delay between each iteration in ms (useful when using `--print-partials`).
+    -h, --help            Prints help information
+    -V, --version         Prints version information
+```
 
 Example file:
 
