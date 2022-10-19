@@ -249,32 +249,9 @@ impl Node {
                     let mut offset = i * 27;
                     output.write_all(b"+-------+-------+-------+\n")?;
                     for _ in 0..3 {
-                        output.write_all(
-                            format!(
-                                "| {} {} {} | {} {} {} | {} {} {} |\n",
-                                puzzle[offset],
-                                puzzle[offset + 1],
-                                puzzle[offset + 2],
-                                puzzle[offset + 3],
-                                puzzle[offset + 4],
-                                puzzle[offset + 5],
-                                puzzle[offset + 6],
-                                puzzle[offset + 7],
-                                puzzle[offset + 8]
-                            )
-                            .as_bytes(),
-                        )?;
-                        offset += 9;
-                    }
-                }
-                output.write_all(b"+-------+-------+-------+\n")?;
-            }
-            OutputStyle::MultiLine => {
-                for i in 0..9 {
-                    let offset = i * 9;
-                    output.write_all(
-                        format!(
-                            "{} {} {} {} {} {} {} {} {}",
+                        writeln!(
+                            output,
+                            "| {} {} {} | {} {} {} | {} {} {} |",
                             puzzle[offset],
                             puzzle[offset + 1],
                             puzzle[offset + 2],
@@ -284,17 +261,36 @@ impl Node {
                             puzzle[offset + 6],
                             puzzle[offset + 7],
                             puzzle[offset + 8]
-                        )
-                        .as_bytes(),
+                        )?;
+                        offset += 9;
+                    }
+                }
+                output.write_all(b"+-------+-------+-------+\n")?;
+            }
+            OutputStyle::MultiLine => {
+                for i in 0..9 {
+                    let offset = i * 9;
+                    writeln!(
+                        output,
+                        "{} {} {} {} {} {} {} {} {}",
+                        puzzle[offset],
+                        puzzle[offset + 1],
+                        puzzle[offset + 2],
+                        puzzle[offset + 3],
+                        puzzle[offset + 4],
+                        puzzle[offset + 5],
+                        puzzle[offset + 6],
+                        puzzle[offset + 7],
+                        puzzle[offset + 8]
                     )?;
                 }
                 output.write_all(b"\n")?;
             }
             OutputStyle::Simple => {
                 for i in puzzle {
-                    output.write_all(format!("{}", i).as_bytes())?;
+                    write!(output, "{}", i)?;
                 }
-                output.write_all(b"\n")?;
+                writeln!(output)?;
             }
         }
         Ok(())
