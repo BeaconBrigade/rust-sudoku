@@ -35,12 +35,12 @@ Accepts input from a text file to fill in the puzzle. Each number (1-9) is inter
 as that number in the puzzle. A zero or any other letter is considered a blank space.
 Any whitespace is ignored.
 
-Usage: [-i FILE] [-o FILE] [--style STYLE] [[-p]] [-d DELAY]
+Usage: [-i FILE] [-o FILE] [--style STYLE] [-p] [-d DELAY]
 
 Available options:
-    -i, --input <FILE>    Location of puzzle to read.
-    -o, --output <FILE>   Output file to write solution to. Leave blank to write to stdout.
-        --style <STYLE>   Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`
+    -i, --input <FILE>    Location of puzzle to read or stdin by default.
+    -o, --output <FILE>   Output file to write solution to or stdout by default.
+        --style <STYLE>   Print puzzle with nice borders, options include `simple`, `multiline` and `bordered`.
     -p, --print-partials  Print each partial solution to the console as the program runs.
     -d, --delay <DELAY>   Add delay between each iteration in ms (useful when using `--print-partials`).
     -h, --help            Prints help information
